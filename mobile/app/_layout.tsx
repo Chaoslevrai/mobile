@@ -1,33 +1,27 @@
-import {
-	DarkTheme,
-	DefaultTheme,
-	ThemeProvider,
-} from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import "react-native-reanimated";
-
-import { useColorScheme } from "@/hooks/use-color-scheme";
-
-export const unstable_settings = {
-	anchor: "(tabs)",
-};
+import { SaeProvider } from "@/src/context/SaeContext";
+import { COLORS } from "@/src/constants";
 
 export default function RootLayout() {
-	const colorScheme = useColorScheme();
-
 	return (
-		<ThemeProvider
-			value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-		>
-			<Stack>
+		<SaeProvider>
+			<StatusBar style="light" />
+			<Stack
+				screenOptions={{
+					headerStyle: { backgroundColor: COLORS.surface },
+					headerTintColor: COLORS.text,
+					headerTitleStyle: { fontWeight: "700" },
+					contentStyle: { backgroundColor: COLORS.background },
+				}}
+			>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen
-					name="modal"
-					options={{ presentation: "modal", title: "Modal" }}
+					name="sae/[id]"
+					options={{ title: "Détail SAé" }}
 				/>
+				<Stack.Screen name="gallery" options={{ title: "Galerie" }} />
 			</Stack>
-			<StatusBar style="auto" />
-		</ThemeProvider>
+		</SaeProvider>
 	);
 }
