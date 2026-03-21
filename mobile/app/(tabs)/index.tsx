@@ -19,10 +19,13 @@ export default function HomeScreen() {
     fetchSaes(filters);
   }, [filters]);
 
-  const filtered: SAe[] = saes.filter(s =>
-    s.titre.toLowerCase().includes(search.toLowerCase()) ||
-    s.auteurs.some(a => a.toLowerCase().includes(search.toLowerCase()))
-  );
+  // CORRECTION ICI : Ajout de (saes || []) et vérification de s.auteurs
+  const filtered: SAe[] = (saes || []).filter(s => {
+    const searchLower = search.toLowerCase();
+    const matchesTitre = s.titre?.toLowerCase().includes(searchLower);
+    const matchesAuteurs = s.auteurs?.some(a => a.toLowerCase().includes(searchLower));
+    return matchesTitre || matchesAuteurs;
+  });
 
   return (
     <View style={s.container}>

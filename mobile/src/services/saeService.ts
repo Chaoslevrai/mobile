@@ -7,11 +7,11 @@ import { MOCK_SAES } from './mockData';
 // ─── Config ──────────────────────────────────────────────────────────────────
 const USE_MOCK = false; // ← false quand le back Spring Boot est prêt
 
-const BASE_URL = 'https://api-mobile-ux6f.onrender.com'; // Android emulator
+const BASE_URL = 'https://api-mobile-ux6f.onrender.com/api'; // Android emulator
 // const BASE_URL = 'http://localhost:8080/api'; // iOS simulator
 
 const api = axios.create({
-  baseURL: `${BASE_URL}/api`,
+  baseURL: `${BASE_URL}`,
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });
@@ -28,11 +28,13 @@ export const getAllSaes = async (filters: Partial<SaeFilters> = {}): Promise<SAe
     if (filters.domaine) result = result.filter(s => s.domaine === filters.domaine);
     return result;
   }
-  const hasFilters = filters.annee || filters.domaine;
-  const endpoint = hasFilters ? '/saes/filter' : '/saes';
-  const { data } = await api.get<SAe[]>('/saes', { params: filters });
+  const hasFilters = (filters.annee || filters.domaine);
+  const endpoint = hasFilters ? '/saes/filter' : '/saes'; // Utilise la variable endpoint !
+  const { data } = await api.get<SAe[]>(endpoint, { params: filters });
   return data;
-};
+}
+
+;
 
 export const getSaeById = async (id: number): Promise<SAe | null> => {
   if (USE_MOCK) {
