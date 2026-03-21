@@ -54,22 +54,29 @@ export default function AddScreen() {
       Alert.alert('Champ requis', 'Le titre est obligatoire.');
       return;
     }
+    
     setLoading(true);
     try {
+      // Configuration du payload pour correspondre au modèle SAE.java
       const payload: Omit<SAe, 'id'> = {
         ...form,
+        // Conversion de la chaîne "Alice, Bob" en tableau ["Alice", "Bob"]
         auteurs: form.auteurs.split(',').map(s => s.trim()).filter(Boolean),
+        // Conversion des strings du formulaire en nombres pour MySQL
         note: parseFloat(form.note) || 0,
         tauxReussite: parseInt(form.tauxReussite) || 0,
         semestre: form.semestre as SAe['semestre'],
-        images: [],
+        images: [], // Liste vide par défaut
       };
+
+      // Appel au backend via le Context
       await addSae(payload);
-      Alert.alert('Succès ✓', 'SAé ajoutée avec succès !', [
+      
+      Alert.alert('Succès ✓', 'SAé enregistrée dans la base de données !', [
         { text: 'OK', onPress: () => router.replace('/') },
       ]);
     } catch (e: any) {
-      Alert.alert('Erreur', e.message);
+      Alert.alert('Erreur BDD', 'Impossible de contacter le serveur Spring Boot. Vérifie Docker.');
     } finally {
       setLoading(false);
     }
@@ -144,7 +151,7 @@ export default function AddScreen() {
       >
         {loading
           ? <ActivityIndicator color="#fff" />
-          : <Text style={s.btnText}>Ajouter la SAé</Text>
+          : <Text style={s.btnText}>Ajouter à la BDD</Text>
         }
       </TouchableOpacity>
 

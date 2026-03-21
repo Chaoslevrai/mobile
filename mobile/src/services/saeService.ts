@@ -5,9 +5,9 @@ import { SAe, SaeFilters } from '../types/sae.types';
 import { MOCK_SAES } from './mockData';
 
 // ─── Config ──────────────────────────────────────────────────────────────────
-const USE_MOCK = true; // ← false quand le back Spring Boot est prêt
+const USE_MOCK = false; // ← false quand le back Spring Boot est prêt
 
-const BASE_URL = 'http://10.0.2.2:8080/api'; // Android emulator
+const BASE_URL = 'http://192.168.0.19:8080/api'; // Android emulator
 // const BASE_URL = 'http://localhost:8080/api'; // iOS simulator
 
 const api = axios.create({
@@ -28,6 +28,8 @@ export const getAllSaes = async (filters: Partial<SaeFilters> = {}): Promise<SAe
     if (filters.domaine) result = result.filter(s => s.domaine === filters.domaine);
     return result;
   }
+  const hasFilters = filters.annee || filters.domaine;
+  const endpoint = hasFilters ? '/saes/filter' : '/saes';
   const { data } = await api.get<SAe[]>('/saes', { params: filters });
   return data;
 };
@@ -37,7 +39,7 @@ export const getSaeById = async (id: number): Promise<SAe | null> => {
     await delay();
     return MOCK_SAES.find(s => s.id === id) ?? null;
   }
-  const { data } = await api.get<SAe>(`/saes/${id}`);
+const { data } = await api.get<SAe>(`/saes/${id}`);
   return data;
 };
 
