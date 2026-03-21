@@ -72,7 +72,7 @@ export default function AddScreen() {
       // Appel au backend via le Context
       await addSae(payload);
       
-      Alert.alert('Succès ✓', 'SAé enregistrée dans la base de données !', [
+      Alert.alert('Succès ✓', 'SAé a bien été enregistrée  !', [
         { text: 'OK', onPress: () => router.replace('/') },
       ]);
     } catch (e: any) {
@@ -151,7 +151,7 @@ export default function AddScreen() {
       >
         {loading
           ? <ActivityIndicator color="#fff" />
-          : <Text style={s.btnText}>Ajouter à la BDD</Text>
+          : <Text style={s.btnText}>Ajouter à la SAE</Text>
         }
       </TouchableOpacity>
 
