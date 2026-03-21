@@ -7,11 +7,11 @@ import { MOCK_SAES } from './mockData';
 // ─── Config ──────────────────────────────────────────────────────────────────
 const USE_MOCK = false; // ← false quand le back Spring Boot est prêt
 
-const BASE_URL = 'http://192.168.0.19:8080/api'; // Android emulator
+const BASE_URL = 'https://api-mobile-ux6f.onrender.com'; // Android emulator
 // const BASE_URL = 'http://localhost:8080/api'; // iOS simulator
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${BASE_URL}/api`,
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });
