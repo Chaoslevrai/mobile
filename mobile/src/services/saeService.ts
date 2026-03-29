@@ -12,7 +12,7 @@ const BASE_URL = 'https://api-mobile-ux6f.onrender.com/api'; // Android emulator
 
 const api = axios.create({
   baseURL: `${BASE_URL}`,
-  timeout: 10000,
+  timeout: 30000,
   headers: { 'Content-Type': 'application/json' },
 });
 
