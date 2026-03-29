@@ -11,6 +11,7 @@ import { COLORS, ANNEES, DOMAINES } from '@/src/constants';
 import { Annee, Domaine, SAe } from '@/src/types/sae.types';
 import SaeCard from '@/src/components/SaeCard';
 
+
 export default function HomeScreen() {
   const { saes, loading, error, filters, fetchSaes, setFilter } = useSae();
   const [search, setSearch] = useState('');
